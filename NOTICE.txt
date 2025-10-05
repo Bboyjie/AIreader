@@ -1,0 +1,8 @@
+This software and associated documentation files are © 2025 Nie Jiaxin.
+
+The software is made available for non-commercial research and educational use only.
+Any commercial use (including SaaS, redistribution, or integration into proprietary systems)
+requires a separate commercial license from the author.
+
+Unauthorized commercial use constitutes copyright infringement
+and may result in DMCA takedown and legal action.

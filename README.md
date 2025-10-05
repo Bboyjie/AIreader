@@ -9,3 +9,23 @@
   📚 基于笔记的复习与问答：生成个性化复习题，支持交互式学习；  
   🚧 功能持续扩展中：计划加入多源笔记同步、知识图谱联动、个性化学习建议等功能。  
   💡 目标是让浏览器成为你的知识中枢，让笔记不仅被记录，更能被理解与运用。
+
+
+
+
+
+
+
+
+## ⚠️ License and Usage Notice
+This repository is distributed under the **CC BY-NC 4.0 License**.  
+🚫 **Commercial use is strictly prohibited** without explicit written permission.
+
+If you wish to use this project or its derivatives for commercial purposes, please contact:
+- **Author**: Bboyjie  
+- **Email**: [2501845673@qq.com]  
+
+> Unauthorized commercial use (including integration into closed-source products, resale, or deployment for profit) will be considered copyright infringement.
+
+
+

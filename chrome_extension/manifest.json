@@ -1,0 +1,27 @@
+
+{
+  "manifest_version": 3,
+  "name": "ReadNote",
+  "version": "0.1",
+  "description": "选中文本右击发送到后端生成笔记，结果显示在 Chrome side panel（侧边栏）并实时同步。",
+  // 声明 side_panel：default_path 指向扩展内要在侧栏渲染的页面
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
+  // 必需的 permission：sidePanel 用于调用 chrome.sidePanel API
+  "permissions": [
+    "contextMenus",
+    "storage",
+    "sidePanel",
+    "activeTab"
+  ],
+  // 声明 background service worker（事件监听、contextMenus、sidePanel 控制）
+  "background": {
+    "service_worker": "background.js"
+  },
+  // 如果希望用户点击工具栏图标打开侧栏（open on action click），不要同时定义 "action.default_popup"
+  "action": {
+    "default_title": "打开侧边栏"
+  },
+  "host_permissions": ["<all_urls>"]
+}

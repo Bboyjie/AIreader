@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="style.css">
+<title>ReadNote SidePanel</title>
+<style>
+  :root {
+    /* 深色主题 */
+    --bg: #0f1724;
+    --card: #1e293b;
+    --accent: #38bdf8;
+    --muted: #94a3b8;
+    --bubble-user: #059669;
+    --bubble-ai: #1e293b;
+    --text-primary: #f1f5f9;
+    --text-secondary: #cbd5e1;
+    --border: #334155;
+    --input-bg: #0f1724;
+    --button-secondary: #334155;
+  }
+
+  /* 明亮主题 */
+  .light-theme {
+    --bg: #f0fdf4;
+    --card: #ffffff;
+    --accent: #059669;
+    --muted: #64748b;
+    --bubble-user: #d1fae5;
+    --bubble-ai: #f1f5f9;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --border: #cbd5e1;
+    --input-bg: #ffffff;
+    --button-secondary: #e2e8f0;
+  }
+
+  body {
+    margin: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  /* 顶部工具栏 */
+  #toolbar {
+    padding: 12px;
+    border-bottom: 1px solid var(--border);
+    background: var(--card);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    transition: background-color 0.3s, border-color 0.3s;
+  }
+
+  #toolbar > div {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  /* 认证区域 */
+  #auth-section {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-right: auto;
+  }
+
+  #user-info {
+    font-size: 14px;
+    color: var(--text-secondary);
+    padding: 6px 10px;
+    background: var(--button-secondary);
+    border-radius: 6px;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  /* 笔记本选择区域 */
+  #notebook-section {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 8px 0;
+  }
+
+  #notebook-section label {
+    font-size: 13px;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    transition: color 0.3s;
+  }
+
+  #notebook-section select {
+    background: var(--button-secondary);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-primary);
+    padding: 6px 10px;
+    font-size: 13px;
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+  }
+
+  /* 按钮样式 */
+  button {
+    background: var(--accent);
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 13px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  button:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+
+  button:disabled {
+    background: #94a3b8;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  #logout-btn, #new-section-btn, #new-page-btn {
+    background: var(--button-secondary);
+    color: var(--text-primary);
+  }
+
+  /* 聊天容器 */
+  #chat-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  /* 输入区域 */
+  #input-bar {
+    display: flex;
+    gap: 8px;
+    padding: 12px;
+    border-top: 1px solid var(--border);
+    background: var(--card);
+    transition: background-color 0.3s, border-color 0.3s;
+  }
+
+  #user-input {
+    flex: 1;
+    min-height: 48px;
+    border-radius: 8px;
+    padding: 12px;
+    border: 1px solid var(--border);
+    background: var(--input-bg);
+    color: var(--text-primary);
+    resize: none;
+    font-family: inherit;
+    font-size: 14px;
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+  }
+
+  #user-input:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: var(--card);
+    box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+  }
+
+  .light-theme #user-input:focus {
+    box-shadow: 0 0 0 2px rgba(5, 150, 105, 0.2);
+  }
+
+  /* 对话气泡 */
+  .bubble {
+    padding: 12px 16px;
+    border-radius: 10px;
+    max-width: 90%;
+    animation: fadeIn 0.3s ease;
+    transition: background 0.3s;
+  }
+
+  .bubble.user {
+    background: var(--bubble-user);
+    align-self: flex-end;
+    color: white;
+    border-bottom-right-radius: 4px;
+  }
+
+  .bubble.ai {
+    background: var(--bubble-ai);
+    align-self: flex-start;
+    color: var(--text-primary);
+    border-bottom-left-radius: 4px;
+  }
+
+  .note-title {
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+    font-size: 15px;
+  }
+
+  .note-summary {
+    font-size: 13px;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    color: var(--text-primary);
+  }
+
+  .note-bullets {
+    margin: 0 0 0 18px;
+    padding-left: 8px;
+    color: var(--text-secondary);
+    font-size: 13px;
+  }
+
+  .note-bullets li {
+    margin-bottom: 4px;
+  }
+
+  .empty {
+    color: var(--text-secondary);
+    text-align: center;
+    margin-top: 40px;
+    font-size: 14px;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* 响应式设计 */
+  @media (max-width: 768px) {
+    #toolbar {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    #auth-section {
+      margin-right: 0;
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    #notebook-section {
+      width: 100%;
+    }
+
+    #notebook-section > div {
+      width: 100%;
+    }
+
+    #notebook-section select {
+      flex: 1;
+    }
+  }
+</style>
+</head>
+<body>
+<div id="toolbar">
+  <!-- 第一行：认证和主题控制 -->
+  <div class="toolbar-row">
+    <div id="auth-section">
+      <span id="user-info">未登录</span>
+      <button id="login-btn">🔑 登录</button>
+      <button id="logout-btn" style="display:none;">🚪 退出</button>
+      <button id="toggle-theme">🌓 主题</button>
+    </div>
+  </div>
+
+  <!-- 第二行：笔记本操作 -->
+  <div id="notebook-section" style="display:none;">
+    <label for="notebook-select">📘:</label>
+    <select id="notebook-select"></select>
+
+    <label for="section-select">📂:</label>
+    <select id="section-select"></select>
+
+    <label for="page-select">📄:</label>
+    <select id="page-select"></select>
+    </div>
+
+  <div id="notebook-operater">
+    <button id="new-section-btn">➕ 分区</button>
+    <button id="new-page-btn">➕📄 页面</button>
+    <button id="note-summary">📋 摘要</button>
+    <button id="review-notes" >📚 复习</button>
+    <button id="append-notes">📝 追加笔记</button>
+<!--    <button id="discuss-notes">💬 探讨</button>-->
+  </div>
+</div>
+
+<div id="chat-container">
+  <!-- 对话气泡会动态插入 -->
+</div>
+
+<div id="input-bar">
+  <textarea id="user-input" placeholder="输入您的内容..." disabled></textarea>
+  <button id="send-btn" disabled>📤 发送</button>
+</div>
+
+<script>
+  // 主题切换功能
+  document.addEventListener('DOMContentLoaded', function() {
+    const toggleThemeBtn = document.getElementById('toggle-theme');
+    const body = document.body;
+
+    // 检查本地存储中的主题设置
+    const savedTheme = localStorage.getItem('readnote-theme');
+    if (savedTheme === 'light') {
+      body.classList.add('light-theme');
+    }
+
+    // 切换主题事件
+    toggleThemeBtn.addEventListener('click', function() {
+      body.classList.toggle('light-theme');
+
+      // 保存主题设置到本地存储
+      if (body.classList.contains('light-theme')) {
+        localStorage.setItem('readnote-theme', 'light');
+      } else {
+        localStorage.setItem('readnote-theme', 'dark');
+      }
+    });
+  });
+</script>
+
+<script src="sidepanel.js"></script>
+</body>
+</html>

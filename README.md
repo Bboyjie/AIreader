@@ -121,12 +121,6 @@ uvicorn main:app --reload --host 0.0.0.0 --port 8002
 
 ---
 
-## 📜 许可证
-
-本项目遵循 [MIT License](./LICENSE)。
-
----
-
 ## 🧩 作者
 
 **AIreader** 由个人开发，旨在探索大模型与知识管理结合的实际落地场景。

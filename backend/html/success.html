@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>登录成功</title>
+</head>
+<body>
+  <p>登录成功！正在返回插件...</p>
+<script>
+  try {
+    if (window.opener) {
+      // 使用 '*' 允许向任意源发送消息（因为 opener 是可信的）
+      window.opener.postMessage({
+        type: 'oauth_success'
+      }, '*');  // ← 关键：不用写插件 ID
+    }
+  } catch (e) {
+    console.error('Failed to notify opener:', e);
+  }
+
+  setTimeout(() => {
+    window.close();
+  }, 1000);
+</script>
+</body>
+</html>

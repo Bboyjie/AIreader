@@ -60,13 +60,15 @@
 
 ### 2️⃣ 配置环境变量
 
-在项目根目录下创建 `.env` 文件，填写以下内容：
+填写backend文件夹下 `.env` 文件，填写以下内容：
 
 ```bash
-CLIENT_ID=your_client_id
-CLIENT_SECRET=your_secret
-REDIRECT_URI=your_redirect_uri
-TENANT_ID=your_tenant_id
+ONENOTE_CLIENT_ID=Azure
+ONENOTE_CLIENT_SECRET=Azure
+ONENOTE_REDIRECT_URI=Azure
+OPENAI_API_KEY=LLM api key
+BASE_URL=LLM base url
+MODEL=LLM 模型 例如qwen/qgt....
 ```
 
 ---

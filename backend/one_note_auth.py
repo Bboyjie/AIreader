@@ -34,14 +34,7 @@ if __name__=="__main__":
         "https://graph.microsoft.com/User.Read",
         "offline_access"
     ]
-    """
-    #ONENOTE_CLIENT_ID=3WY8Q~QkIbLPv3SsPXSOlOaoTUOUsnEU61tcGdq6
-    ONENOTE_CLIENT_ID=fbb89725-6792-470e-8b99-187351a6c42b
-ONENOTE_CLIENT_SECRET=3WY8Q~QkIbLPv3SsPXSOlOaoTUOUsnEU61tcGdq6
-c11bc5ef-3b70-4794-af19-59fe4d0c3909
-ONENOTE_REDIRECT_URI=http://localhost:8000/callback
-    """
-    params = {
+   params = {
         "client_id": CLIENT_ID,
         "response_type": "code",
         "redirect_uri": REDIRECT_URI,
@@ -52,4 +45,5 @@ ONENOTE_REDIRECT_URI=http://localhost:8000/callback
     print(f"scope:{params["scope"]}")
 
     auth_url = "https://login.microsoftonline.com/common/oauth2/v2.0/authorize?" + urlencode(params)
+
     print("请在浏览器打开：", auth_url)
